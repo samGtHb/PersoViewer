@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métronome</title>
+	
+	<script>
+        let audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        let intervalId;
+
+        function playClick() {
+		
+		var note = audioContext.createOscillator();
+
+		note.frequency.value = 380;
+		note.connect(audioContext.destination);
+
+		note.start();
+		note.stop(audioContext.currentTime + 0.05);
+	
+            //let oscillator = audioContext.createOscillator();
+            //oscillator.type = 'square';
+            //oscillator.frequency.setValueAtTime(380, audioContext.currentTime); // 1000 Hz
+            //oscillator.connect(audioContext.destination);
+            //oscillator.start();
+            //oscillator.stop(audioContext.currentTime + 0.1); // 0.1 second click
+        }
+
+        function startMetronome() {
+            let bpm = document.getElementById('bpm').value;
+            let interval = 60000 / bpm; // Convert BPM to milliseconds
+            intervalId = setInterval(playClick, interval);
+        }
+
+        function stopMetronome() {
+            clearInterval(intervalId);
+        }
+    </script>
+	
+</head>
+<body>
+    <h1>Métronome</h1>
+    <label for="bpm">BPM: </label>
+    <input type="number" id="bpm" value="60">
+    <button onclick="startMetronome()">Start</button>
+    <button onclick="stopMetronome()">Stop</button>
+
+    <footer>
+<p>Author: John Doe</p>
+<p><a href="mailto:john@example.com">john@example.com</a></p>
+</footer>
+</body>
+</html>
